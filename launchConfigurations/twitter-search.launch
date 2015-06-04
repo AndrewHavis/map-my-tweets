@@ -1,0 +1,22 @@
+{
+    "Params": {
+        "DevMode": {
+            "Instrumentation": {
+                "command": "",
+                "env": {"ENABLE_BLUEMIX_DEV_MODE": true},
+                "memory": "256M"
+            },
+            "Packager": "com.ibm.perfectstorm.cloudoe.packager.LiveEditDeploymentPackager"
+        },
+        "Name": "bluemix-test-aph",
+        "Target": {
+            "Org": "andrew.havis@uk.ibm.com",
+            "Space": "watson-test",
+            "Url": "https://api.eu-gb.bluemix.net"
+        },
+        "Timeout": 60
+    },
+    "Path": "",
+    "ServiceId": "com.ibm.cloudoe.orion.client.deploy",
+    "Type": "Cloud Foundry"
+}
