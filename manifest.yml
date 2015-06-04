@@ -1,0 +1,8 @@
+applications:
+- services:
+  - cloudant
+  - Machine Translation-58
+  name: watson-aph-test
+  command: node app.js
+  path: .
+  memory: 256M

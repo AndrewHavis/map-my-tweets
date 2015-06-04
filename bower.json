@@ -1,0 +1,32 @@
+{
+  "name": "template-project",
+  "version": "0.0.1",
+  "authors": [
+    "Andrew Havis <andrew.havis@uk.ibm.com>"
+  ],
+  "description": "This application can be used as a template or starting point for projects",
+  "main": "app/index.html",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "template",
+    "bluemix",
+    "new"
+  ],
+  "license": "MIT",
+  "homepage": "http://example.com/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "angular": "~1.4.0"
+  }
+}

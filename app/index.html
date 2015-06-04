@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html data-ng-app="app" data-ng-controller="MainCtrl">
+   
+    <head>
+       
+        <!-- Meta properties -->
+        <meta charset="utf-8">
+        <meta name="author" content="Andrew Havis">
+        <meta name="organization" content="IBM">
+        
+        <!-- Import Angular -->
+        <script src="/lib/angular/angular.min.js"></script>
+        <script src="/controllers/main.js"></script>
+        
+        <!-- Import Bootstrap -->
+        <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+        
+        <title data-ng-bind="title">Sample Title</title>
+        
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{title}}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>{{test}}<p>
+                </div>
+                <div class="col-md-6" data-ng-repeat="rows in apiData">
+                    <p>{{rows.doc.text}}<p>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    
+</html>
