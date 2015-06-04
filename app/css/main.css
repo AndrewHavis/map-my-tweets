@@ -1,0 +1,57 @@
+body {
+    background-color: #333333;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+div.search-form {
+    text-align: center;
+    color: black;
+    margin-bottom: 2em;
+}
+
+div.search-form input {
+    width: 300px;
+}
+
+div.user {
+    background-color: AliceBlue;
+    color: #333333;
+    text-align: left;
+    border-radius: 8px;
+    box-shadow: 4px #999999;
+    margin-bottom: 1em;
+}
+
+div.user div {
+    margin-bottom: 0.2em;
+}
+
+div.user span {
+    margin-left: 1em;
+}
+
+div.count {
+    margin-top: 0.5em;
+    text-align: center;
+}
+
+span.handle {
+    color: #999999;
+    font-style: italic;
+}
+
+span.avatar {
+    float: right;
+    margin-top: 0.5em;
+}
+
+span.tweetCount, span.followerCount, span.followingCount {
+    font-weight: bold;
+    clear: both;
+}

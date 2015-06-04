@@ -1,7 +1,7 @@
 {
-  "name": "TemplateProject",
+  "name": "TwitterUserSearch",
   "version": "0.0.1",
-  "description": "This application can be used as a template or starting point for projects",
+  "description": "This is a simple application that searches for Twitter users",
   "scripts": {
     "start": "node app.js"
   },
@@ -10,7 +10,8 @@
     "cloudant": "^1.0.0-beta3",
     "express": "^4.12.4",
     "request": "^2.55.0",
-    "socket.io": "^1.3.5"
+    "socket.io": "^1.3.5",
+    "twitter": "^1.2.5"
   },
   "engines": {
     "node": "0.10.26"

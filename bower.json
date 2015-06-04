@@ -1,10 +1,10 @@
 {
-  "name": "template-project",
+  "name": "TwitterUserSearch",
   "version": "0.0.1",
   "authors": [
     "Andrew Havis <andrew.havis@uk.ibm.com>"
   ],
-  "description": "This application can be used as a template or starting point for projects",
+  "description": "This is a simple application that searches for Twitter users",
   "main": "app/index.html",
   "moduleType": [
     "globals",

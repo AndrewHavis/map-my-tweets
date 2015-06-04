@@ -19,7 +19,7 @@ catch (err) {
 }
 
 var cf = require('cfenv');
-var appEnv = cf.getAppEnv({vcap: {services: credentials[0]}});
+var appEnv = cf.getAppEnv({vcap: {services: credentials[1]}});
 
 // Variables for Cloudant
 var Cloudant = require('cloudant');

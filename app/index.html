@@ -16,7 +16,10 @@
         <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
         <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
         
-        <title data-ng-bind="title">Sample Title</title>
+        <!-- Import custom CSS styles -->
+        <link type="text/css" rel="stylesheet" href="/css/main.css">
+        
+        <title data-ng-bind="title">Twitter User Search</title>
         
     </head>
     
@@ -29,11 +32,39 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <p>{{test}}<p>
+                <div class="col-md-12 search-form">
+                    <form>
+                        <input type="text" data-ng-model="userSearch" placeholder="Search for Twitter users" id="inputUserSearch" name="query">
+                        <button type="submit" data-ng-click="doUserSearch(userSearch)">Search Twitter Users</button>
+                    </form>
                 </div>
-                <div class="col-md-6" data-ng-repeat="rows in apiData">
-                    <p>{{rows.doc.text}}<p>
+            </div>
+            <div class="row" data-ng-show="userResults.length > 0">
+                <div class="col-md-12" data-ng-repeat="u in userResults">
+                       <div class="col-md-12 user">
+                            <div class="row">
+                                <div class="col-md-8"><h2 class="username">{{u.name}}</h2></div>
+                                <div class="col-md-4"><span class="avatar"><img data-ng-src="{{u.profile_image_url_https}}" src="/images/twitter.svg" alt="Profile picture" width="48" height="48"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><span class="handle">@{{u.screen_name}}</span></div>
+                            </div>
+                            <div class="row" data-ng-hide="!u.description">
+                                <div class="col-md-12"><span class="bio">{{u.description}}</span></div>
+                            </div>
+                            <div class="row" data-ng-hide="!u.location">
+                                <div class="col-md-12"><span class="location">{{u.location}}</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 count"><span class="tweetCount">{{u.statuses_count}}</span> tweets</div>
+                                <div class="col-md-4 count"><span class="followerCount">{{u.followers_count}}</span> followers</div>
+                                <div class="col-md-4 count"><span class="followingCount">{{u.friends_count}}</span> following</div>
+                            </div>
+                            </div>
+                       </div>
+                </div>
+                <div class="col-md-12" data-ng-hide="userResults.length > 0">
+                    <p>Please search for Twitter users using the box above.<p>
                 </div>
             </div>
         </div>

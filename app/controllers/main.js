@@ -2,18 +2,22 @@ var app = angular.module('app', []);
 
 app.controller('MainCtrl', function($scope, $http) {
     
-	$scope.title = 'New Project';
+	$scope.title = 'Twitter User Search';
 	$scope.test = 'Hello, World!';
-    $scope.apiData = [];
+    $scope.userResults = [];
     
-    $http.get('/api/cloudant')
+    $scope.doUserSearch = function doUserSearch(query) {
+    $http.get('/api/twitter/users/' + query)
     .success(function(response) {
-        $scope.apiData = response.rows;
-        console.log($scope.feedData);
+        $scope.userResults = response;
+        $scope.title = 'Twitter User Search for ' + query;
+        console.log($scope.userResults);
     })
     .error(function(error) {
-        console.log('There was an error retrieving the data from the Cloudant API');
+        $scope.title = 'Twitter User Search';
+        console.log('There was an error retrieving the data from the API');
         console.log(error);
     });
-	
+    }
+    
 });

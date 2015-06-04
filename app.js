@@ -39,6 +39,26 @@ var cloudant = require('./server/api/cloudant.js');
 
 // **************************************
 
+// ************ Twitter API *************
+
+var twitter = require('./server/api/twitter.js');
+
+// User search
+// Set up our API route
+app.get('/api/twitter/users/:query', function(req, res) {
+    var query = req.params.query;
+    twitter.userSearch(query, function(results, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.json(results);
+        }
+    });
+});
+
+// **************************************
+
 // Render index page
 app.get('/', function(req, res){
     res.sendFile('index.html');
