@@ -12,6 +12,9 @@ var Twitter = require('twitter');
 // Import Cloudant
 var cloudant = require('./cloudant');
 
+// Import our API controller
+var api = require('../controllers/api.ctrl.js');
+
 var twitter = Twitter({
     consumer_key: process.env.consumer_key,
     consumer_secret: process.env.consumer_secret,
@@ -19,11 +22,36 @@ var twitter = Twitter({
     access_token_secret: process.env.access_token_secret
 });
 
+module.exports.confidenceSearch = function(userQuery, companyQuery, callback) {
+
+    // Search for the user and company, and determine a confidence level of whether the user is associated with that company
+    
+    // Do a user search, and do a confidence search for each of the results
+    module.exports.userSearch(userQuery, function(res, err) {
+        if (!!err) {
+            return callback(null, new Error('An error occurred when doing the Twitter search\n' + JSON.stringify(err)));
+        }
+        else {
+            for (user in res) {
+                api.confidence(res[user], companyQuery, function(result, error) {
+                    if (!!error) {
+                        return callback(null, new Error('An error occurred when doing the confidence search\n' + JSON.stringify(err)));
+                    }
+                    else {
+                        console.log(result);
+                        return result;  
+                    }
+                });
+            }
+        }            
+    });
+}
+
 // Run a user search
 module.exports.userSearch = function(query, callback) {
     twitter.get('users/search', {q: query}, function(err, users, res) {
         if (!!err) {
-            return callback(null, new Error('An error occurred when doing the Twitter search\n' + JSON.stringify(err)));
+            return callback(null, new Error('An error occurred when doing the user search\n' + JSON.stringify(err)));
         }
         else {
             var usersObj = JSON.parse(JSON.stringify(users));

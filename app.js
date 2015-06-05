@@ -98,6 +98,20 @@ app.get('/api/twitter/lists/:listId/users/:userId', function(req, res) {
     });
 });
 
+// Confidence search API
+app.get('/api/twitter/confidence/:userQuery/:companyQuery', function(req, res) {
+    var userQuery = req.params.userQuery;
+    var companyQuery = req.params.companyQuery;
+    twitter.confidenceSearch(userQuery, companyQuery, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.json(result);
+        }
+    });
+});
+
 
 // **************************************
 
