@@ -43,8 +43,9 @@ var cloudant = require('./server/api/cloudant.js');
 
 var twitter = require('./server/api/twitter.js');
 
+// Set up our API routes
+
 // User search
-// Set up our API route
 app.get('/api/twitter/users/:query', function(req, res) {
     var query = req.params.query;
     twitter.userSearch(query, function(results, error) {
@@ -56,6 +57,47 @@ app.get('/api/twitter/users/:query', function(req, res) {
         }
     });
 });
+
+// Get owned lists
+app.get('/api/twitter/users/:query/lists', function(req, res) {
+    var query = req.params.query;
+    twitter.getOwnedLists(query, function(results, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.json(results);
+        }
+    });
+});
+
+// Get list by ID
+app.get('/api/twitter/lists/:id', function(req, res) {
+    var listId = req.params.id;
+    twitter.getList(listId, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.json(result);
+        }
+    }); 
+});
+
+// Determine whether a given user is in a specified list
+app.get('/api/twitter/lists/:listId/users/:userId', function(req, res) {
+    var listId = req.params.listId;
+    var userId = req.params.userId;
+    twitter.isUserInList(userId, listId, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.send(result);
+        }
+    });
+});
+
 
 // **************************************
 

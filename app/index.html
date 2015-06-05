@@ -34,8 +34,9 @@
             <div class="row">
                 <div class="col-md-12 search-form">
                     <form>
-                        <input type="text" data-ng-model="userSearch" placeholder="Search for Twitter users" id="inputUserSearch" name="query">
-                        <button type="submit" data-ng-click="doUserSearch(userSearch)">Search Twitter Users</button>
+                        <input type="text" data-ng-model="userSearch" placeholder="User Search" id="inputUserSearch" name="userQuery">
+                        <input type="text" data-ng-model="companySearch" placeholder="Company Search" id="inputCompanySearch" name="companyQuery">
+                        <button type="submit" data-ng-click="doUserSearch(userSearch, companySearch)">Search Twitter</button>
                     </form>
                 </div>
             </div>
