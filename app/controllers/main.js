@@ -18,8 +18,8 @@ app.controller('MainCtrl', function($scope, $http) {
         // Fetch the user information from the API
         $scope.userResults = response;
         if (companyQuery === '') {
-            // If no company was specified, set the confidence level to zero
-            $scope.userResults.confidence = 0;
+            // If no company was specified, set the confidence level to -1 (actually a neutral level)
+            $scope.userResults.confidence = -1;
         }
         $scope.title = 'Twitter User Search for ' + userQuery;
         

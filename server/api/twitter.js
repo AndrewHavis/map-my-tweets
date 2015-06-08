@@ -26,31 +26,22 @@ module.exports.confidenceSearch = function(userQuery, companyQuery, callback) {
 
     // Search for the user and company, and determine a confidence level of whether the user is associated with that company
     
-    var confResults = {};
-    
     // Do a user search, and do a confidence search for each of the results
-    confResults = module.exports.userSearch(userQuery, function(res, err) {
+    module.exports.userSearch(userQuery, function(res, err) {
         if (!!err) {
-            var e = new Error('An error occurred when doing the Twitter search\n' + JSON.stringify(err));
-            return e;
+            return callback(null, new Error('An error occurred when doing the Twitter search\n' + JSON.stringify(err)));
         }
         else {
-            var obj = {};
-            for (user in res) {
-                obj += api.confidence(res[user], companyQuery, function(result, error) {
-                    if (!!error) {
-                        var e = new Error('An error occurred when doing the confidence search\n' + JSON.stringify(err));
-                        return e;
-                    }
-                    else {
-                        return result;  
-                    }
-                });
-            }
-        }
-        return obj;
+            api.confidence(res, companyQuery, function(result, error) {
+                if (!!error) {
+                    return callback(null, new Error('An error occurred when doing the confidence search\n' + JSON.stringify(err)));
+                }
+                else {
+                    return callback(result);  
+                }
+            });
+        }            
     });
-    return callback(confResults);
 }
 
 // Run a user search
@@ -64,6 +55,18 @@ module.exports.userSearch = function(query, callback) {
             return callback(usersObj);
         }
     });
+}
+
+module.exports.getFollows = function(userId, callback) {
+    twitter.get('friends/list', {user_id: userId}, function(err, follows, res) {
+        if (!!err) {
+            return callback(null, new Error('An error occurred when finding follows\n' + JSON.stringify(err)));
+        }
+        else {
+            var followsObj = JSON.parse(JSON.stringify(follows));
+            return callback(followsObj);
+        }
+    })
 }
 
 // Get a feed of the lists owned by a specified user

@@ -41,8 +41,9 @@
                 </div>
             </div>
             <div class="row" data-ng-show="userResults.length > 0">
+                <p><span class="count">{{userResults.length}}</span> user<span data-ng-hide="userResults.length === 1">s were</span> <span data-ng-show="userResults.length === 1">was</span> found. <span data-ng-show="!!companySearch">If a result is shaded green, this indicates that there is a fair level of confidence that the user is associated with {{companySearch}}. If a result is red, this means that the user is unlikely to be associated with the company. A numeric confidence score is also given in the bottom right-hand corner of each result.</span></p>
                 <div class="col-md-12" data-ng-repeat="u in userResults">
-                       <div class="col-md-12 user" data-ng-class="{confident: u.confidence === 1, inconfident: }">
+                       <div class="col-md-12 user" data-ng-class="{confident: u.confidence >= 1, inconfident: u.confidence === 0}">
                             <div class="row">
                                 <div class="col-md-8"><h2 class="username">{{u.name}}</h2></div>
                                 <div class="col-md-4"><span class="avatar"><img data-ng-src="{{u.profile_image_url_https}}" src="/images/twitter.svg" alt="Profile picture" width="48" height="48"></span>
@@ -57,16 +58,17 @@
                                 <div class="col-md-12"><span class="location">{{u.location}}</span></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 count"><span class="tweetCount">{{u.statuses_count}}</span> tweets</div>
-                                <div class="col-md-4 count"><span class="followerCount">{{u.followers_count}}</span> followers</div>
-                                <div class="col-md-4 count"><span class="followingCount">{{u.friends_count}}</span> following</div>
+                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}'><span class="tweet-count">{{u.statuses_count}}</span> tweets</div>
+                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}'><span class="follower-count">{{u.followers_count}}</span> followers</div>
+                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}'><span class="following-count">{{u.friends_count}}</span> following</div>
+                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}' data-ng-show="u.confidence >= 0"><span class="confidence-level">{{u.confidence}}</span> confidence</span></div>
                             </div>
                             </div>
                        </div>
                 </div>
-                <div class="col-md-12" data-ng-hide="userResults.length > 0">
-                    <p>Please search for Twitter users using the box above.<p>
-                </div>
+            </div>
+            <div class="col-md-12 row" data-ng-hide="userResults.length > 0">
+                <p>Please search for Twitter users using the box above. The company name is optional.<p>
             </div>
         </div>
         

@@ -58,6 +58,19 @@ app.get('/api/twitter/users/:query', function(req, res) {
     });
 });
 
+// Get follows
+app.get('/api/twitter/users/:query/follows', function(req, res) {
+    var query = req.params.query;
+    twitter.getFollows(query, function(results, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.json(results);
+        }
+    });
+});
+
 // Get owned lists
 app.get('/api/twitter/users/:query/lists', function(req, res) {
     var query = req.params.query;

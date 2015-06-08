@@ -29,11 +29,11 @@ div.user {
 }
 
 div.confident {
-    background-color: #99FF99 !important;
+    background-color: #CCFFCC !important;
 }
 
 div.inconfident {
-    background-color: #FF9999 !important;
+    background-color: #FFCCCC !important;
 }
 
 div.user div {
@@ -49,6 +49,10 @@ div.count {
     text-align: center;
 }
 
+span.count {
+    font-weight: bold;
+}
+
 span.handle {
     color: #999999;
     font-style: italic;
@@ -59,7 +63,12 @@ span.avatar {
     margin-top: 0.5em;
 }
 
-span.tweetCount, span.followerCount, span.followingCount {
+span.tweet-count, span.follower-count, span.following-count, span.confidence-level {
     font-weight: bold;
     clear: both;
+}
+
+span.what {
+    border-bottom: 1px dotted black;
+    font-weight: bold;
 }
