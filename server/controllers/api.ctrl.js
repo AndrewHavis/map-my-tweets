@@ -21,12 +21,6 @@ module.exports.confidence = function(users, company, callback) {
         if (!!bio) {
             confidenceScore++;
         }
-        
-        // Search company follows for user
-        var followed = doesCompanyFollowUser(users[u], company);
-        if (!!followed) {
-            confidenceScore++;
-        }
 
         users[u].confidence = confidenceScore;
     }
