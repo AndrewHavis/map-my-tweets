@@ -20,7 +20,7 @@ module.exports.confidence = function(userObj, company, callback) {
     }
     
     userObj.confidence = confidenceScore;
-    return userObj;
+    return callback(userObj);
     
 }
 

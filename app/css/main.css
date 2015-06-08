@@ -28,6 +28,14 @@ div.user {
     margin-bottom: 1em;
 }
 
+div.confident {
+    background-color: #99FF99 !important;
+}
+
+div.inconfident {
+    background-color: #FF9999 !important;
+}
+
 div.user div {
     margin-bottom: 0.2em;
 }

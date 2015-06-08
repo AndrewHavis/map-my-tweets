@@ -26,25 +26,31 @@ module.exports.confidenceSearch = function(userQuery, companyQuery, callback) {
 
     // Search for the user and company, and determine a confidence level of whether the user is associated with that company
     
+    var confResults = {};
+    
     // Do a user search, and do a confidence search for each of the results
-    module.exports.userSearch(userQuery, function(res, err) {
+    confResults = module.exports.userSearch(userQuery, function(res, err) {
         if (!!err) {
-            return callback(null, new Error('An error occurred when doing the Twitter search\n' + JSON.stringify(err)));
+            var e = new Error('An error occurred when doing the Twitter search\n' + JSON.stringify(err));
+            return e;
         }
         else {
+            var obj = {};
             for (user in res) {
-                api.confidence(res[user], companyQuery, function(result, error) {
+                obj += api.confidence(res[user], companyQuery, function(result, error) {
                     if (!!error) {
-                        return callback(null, new Error('An error occurred when doing the confidence search\n' + JSON.stringify(err)));
+                        var e = new Error('An error occurred when doing the confidence search\n' + JSON.stringify(err));
+                        return e;
                     }
                     else {
-                        console.log(result);
                         return result;  
                     }
                 });
             }
-        }            
+        }
+        return obj;
     });
+    return callback(confResults);
 }
 
 // Run a user search

@@ -42,7 +42,7 @@
             </div>
             <div class="row" data-ng-show="userResults.length > 0">
                 <div class="col-md-12" data-ng-repeat="u in userResults">
-                       <div class="col-md-12 user">
+                       <div class="col-md-12 user" data-ng-class="{confident: u.confidence === 1, inconfident: }">
                             <div class="row">
                                 <div class="col-md-8"><h2 class="username">{{u.name}}</h2></div>
                                 <div class="col-md-4"><span class="avatar"><img data-ng-src="{{u.profile_image_url_https}}" src="/images/twitter.svg" alt="Profile picture" width="48" height="48"></span>

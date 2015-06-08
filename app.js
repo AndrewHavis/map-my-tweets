@@ -99,7 +99,7 @@ app.get('/api/twitter/lists/:listId/users/:userId', function(req, res) {
 });
 
 // Confidence search API
-app.get('/api/twitter/confidence/:userQuery/:companyQuery', function(req, res) {
+app.get('/api/twitter/users/:userQuery/:companyQuery', function(req, res) {
     var userQuery = req.params.userQuery;
     var companyQuery = req.params.companyQuery;
     twitter.confidenceSearch(userQuery, companyQuery, function(result, error) {

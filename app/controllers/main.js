@@ -7,11 +7,20 @@ app.controller('MainCtrl', function($scope, $http) {
     $scope.userResults = [];
     
     $scope.doUserSearch = function doUserSearch(userQuery, companyQuery) {
-    $http.get('/api/confidence/' + userQuery + '/' + companyQuery)
-    .success(function(response) {
         
+    // If this is just a user search (i.e. no company has been specified), set the company query to an empty string
+    if (companyQuery === undefined) {
+        companyQuery = '';
+    }
+           
+    $http.get('/api/twitter/users/' + userQuery + '/' + companyQuery)
+    .success(function(response) {
         // Fetch the user information from the API
         $scope.userResults = response;
+        if (companyQuery === '') {
+            // If no company was specified, set the confidence level to zero
+            $scope.userResults.confidence = 0;
+        }
         $scope.title = 'Twitter User Search for ' + userQuery;
         
     })
