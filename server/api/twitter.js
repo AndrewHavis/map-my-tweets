@@ -25,24 +25,15 @@ var twitter = Twitter({
 module.exports.confidenceSearch = function(userQuery, companyQuery, callback) {
 
     // Search for the user and company, and determine a confidence level of whether the user is associated with that company
-    
-    // Do a user search, and do a confidence search for each of the results
-    module.exports.userSearch(userQuery, function(res, err) {
-        if (!!err) {
-            return callback(null, new Error('An error occurred when doing the Twitter search\n' + JSON.stringify(err)));
+    api.confidence(userQuery, companyQuery, function(result, error) {
+        if (!!error) {
+            return callback(null, new Error('An error occurred when doing the confidence search\n' + JSON.stringify(err)));
         }
         else {
-            api.confidence(res, companyQuery, function(result, error) {
-                if (!!error) {
-                    return callback(null, new Error('An error occurred when doing the confidence search\n' + JSON.stringify(err)));
-                }
-                else {
-                    return callback(result);  
-                }
-            });
-        }            
+            return callback(result);  
+        }
     });
-}
+}            
 
 // Run a user search
 module.exports.userSearch = function(query, callback) {
