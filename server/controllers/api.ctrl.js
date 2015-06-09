@@ -10,27 +10,44 @@
 var twitter = require('./../api/twitter');
 
 // Function to determine the level of confidence that a user is associated with a specified company
-module.exports.confidence = function(users, company, callback) {
+module.exports.confidence = function(userQuery, company, callback) {
     
-    // First, let's do a bio search - if the company's name appears in the user's bio, add one to the confidence score
-    for (u in users) {
-        var confidenceScore = 0;
-        
-        // Bio search for company name
-        var bio = bioSearch(users[u].description, company);
-        if (!!bio) {
-            confidenceScore++;
-        }
-        
-        // Search company follows for user
-        var followed = doesCompanyFollowUser(users[u], company);
-        if (!!followed) {
-            confidenceScore++;
-        }
+    // First, let's do a user search for our user query
+    var userSearch = function(callback) {
+        twitter.userSearch(userQuery, function(results, error) {
+            if (!!error) {
+                var e = new Error('ERROR: Cannot do confidence search\n' + error)
+                return callback(e);
+            }
+            else {
+                return callback(results);
+            }
+        });
+    };
+    
+    userSearch(function(userResults) {
+        for (u in userResults) {
 
-        users[u].confidence = confidenceScore;
-    }
-    return callback(users);
+            var confidenceScore = 0;
+
+            // Do a bio search - if the company's name appears in the user's bio, add one to the confidence score
+            var bio = bioSearch(userResults[u].description, company);
+            if (!!bio) {
+                confidenceScore++;
+            }
+
+            // Search company follows for user
+            doesCompanyFollowUser(userResults[u], company, function(followed) {
+                if (!!followed) {
+                    confidenceScore++;
+                }
+            });
+
+            userResults[u].confidence = confidenceScore;
+
+        }
+        return callback(userResults);
+    });
 }
 
 var bioSearch = function(bio, company) {
@@ -45,39 +62,52 @@ var bioSearch = function(bio, company) {
     return companyNameFound;
 }
 
-var doesCompanyFollowUser = function(user, company) {
-    
-    // Does the specified company follow the user?
-    // Find what we think is the official company profile
-    var companyProfile = findOfficialCompanyProfile(company);
-    
-    // Now get the list of follows of that profile
-    var follows = twitter.getFollows(companyProfile.id);
+var doesCompanyFollowUser = function(user, company, callback) {
     
     // Get the user ID
     var userId = user.id;
     
-    // Now loop through the follows, and return true if the user ID appears in any of them
-    for (f in follows.users) {
-        if (follows[f].id === user.id) {
-            return true;
-            break;
-        }
-    }
+    // Does the specified company follow the user?
+    // Find what we think is the official company profile
+    findOfficialCompanyProfile(company, function(result) {
+        
+        // Now get the list of follows of that profile
+        twitter.getFollows(result.id, function(follows, error) {
+            
+            if (!!error) {
+                console.log('Cannot find follows\n' + error);
+            }
+            else {
+            
+                var followsJSON = JSON.parse(JSON.stringify(follows));
+
+                // Now loop through the follows, and return true if the user ID appears in any of them
+                for (f in follows.users) {
+                    if (follows.users[f].id == user.id) {
+                        return callback(true);
+                        break;
+                    }
+                }
+                
+            }
+            
+        });
+        
+    });
     
     // If we've arrived here, say that the company doesn't follow the user
-    return false;
+    return callback(false);
     
 }
 
-var findOfficialCompanyProfile = function(company) {
+var findOfficialCompanyProfile = function(company, callback) {
     
     // This function attempts to find the official Twitter profile of a specified company
     // The strategy for this is to use the first verified account that appears
     // If no verified accounts appear, then we will use the one that appears first
     
     // Use the user search to look for the company
-    var search = twitter.userSearch(company, function(res, err) {
+    twitter.userSearch(company, function(res, err) {
         if (!!err) {
             console.log('Cannot find a Twitter profile for ' + company + '\n' + err);
         }
@@ -86,18 +116,16 @@ var findOfficialCompanyProfile = function(company) {
             // If one is verified, return it
             for (r in res) {
                if (!!res[r].verified) {
-                   return res[r];
+                   return callback(res[r]);
                    break;
                } 
             }
-            
+
             // If we're here, simply return the first result
-            return res[0];
-            
+            return callback(res[0]);
+
         }
-            
+
     });
-    
-    return search;
                        
 }

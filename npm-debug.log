@@ -1,0 +1,265 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'c:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'c:\\Users\\IBM_ADMIN\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'node-inspector' ]
+2 info using npm@2.3.0
+3 info using node@v0.10.32
+4 silly cache add args [ 'node-inspector', null ]
+5 verbose cache add spec node-inspector
+6 silly cache add parsed spec { raw: 'node-inspector',
+6 silly cache add   scope: null,
+6 silly cache add   name: 'node-inspector',
+6 silly cache add   rawSpec: '',
+6 silly cache add   spec: '*',
+6 silly cache add   type: 'range' }
+7 verbose addNamed node-inspector@*
+8 silly addNamed semver.valid null
+9 silly addNamed semver.validRange *
+10 silly addNameRange { name: 'node-inspector', range: '*', hasData: false }
+11 silly mapToRegistry name node-inspector
+12 silly mapToRegistry using default registry
+13 silly mapToRegistry registry https://registry.npmjs.org/
+14 silly mapToRegistry uri https://registry.npmjs.org/node-inspector
+15 verbose addNameRange registry:https://registry.npmjs.org/node-inspector not in flight; fetching
+16 verbose request uri https://registry.npmjs.org/node-inspector
+17 verbose request no auth needed
+18 info attempt registry request try #1 at 13:03:54
+19 verbose request id 4032755954ab2082
+20 verbose etag "4N8OSFWBWWM2ECWKLFB4Z71WX"
+21 http request GET https://registry.npmjs.org/node-inspector
+22 http 200 https://registry.npmjs.org/node-inspector
+23 silly get cb [ 200,
+23 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+23 silly get     etag: '"2NRSF19AKNS8CZVL2JY2BG0I4"',
+23 silly get     'content-type': 'application/json',
+23 silly get     'cache-control': 'max-age=60',
+23 silly get     'content-length': '106036',
+23 silly get     'accept-ranges': 'bytes',
+23 silly get     date: 'Tue, 09 Jun 2015 12:03:57 GMT',
+23 silly get     via: '1.1 varnish',
+23 silly get     age: '0',
+23 silly get     connection: 'keep-alive',
+23 silly get     'x-served-by': 'cache-lcy1126-LCY',
+23 silly get     'x-cache': 'HIT',
+23 silly get     'x-cache-hits': '1',
+23 silly get     'x-timer': 'S1433851437.009722,VS0,VE170',
+23 silly get     vary: 'Accept' } ]
+24 silly addNameRange number 2 { name: 'node-inspector', range: '*', hasData: true }
+25 silly addNameRange versions [ 'node-inspector',
+25 silly addNameRange   [ '0.0.1',
+25 silly addNameRange     '0.0.2',
+25 silly addNameRange     '0.0.3',
+25 silly addNameRange     '0.0.4',
+25 silly addNameRange     '0.1.0',
+25 silly addNameRange     '0.1.1',
+25 silly addNameRange     '0.1.2',
+25 silly addNameRange     '0.1.3',
+25 silly addNameRange     '0.1.4',
+25 silly addNameRange     '0.1.5',
+25 silly addNameRange     '0.1.6',
+25 silly addNameRange     '0.1.7',
+25 silly addNameRange     '0.1.8',
+25 silly addNameRange     '0.1.9',
+25 silly addNameRange     '0.1.10',
+25 silly addNameRange     '0.3.0',
+25 silly addNameRange     '0.3.1',
+25 silly addNameRange     '0.3.2',
+25 silly addNameRange     '0.3.3',
+25 silly addNameRange     '0.3.4',
+25 silly addNameRange     '0.4.0',
+25 silly addNameRange     '0.5.0',
+25 silly addNameRange     '0.6.0',
+25 silly addNameRange     '0.6.1',
+25 silly addNameRange     '0.6.2',
+25 silly addNameRange     '0.7.0-1',
+25 silly addNameRange     '0.2.0-beta1',
+25 silly addNameRange     '0.2.0-beta2',
+25 silly addNameRange     '0.2.0-beta3',
+25 silly addNameRange     '0.2.0-beta4',
+25 silly addNameRange     '0.3.0-preview1',
+25 silly addNameRange     '0.7.0-2',
+25 silly addNameRange     '0.7.0',
+25 silly addNameRange     '0.7.1',
+25 silly addNameRange     '0.7.2',
+25 silly addNameRange     '0.7.3',
+25 silly addNameRange     '0.7.4',
+25 silly addNameRange     '0.8.0',
+25 silly addNameRange     '0.8.1',
+25 silly addNameRange     '0.8.3',
+25 silly addNameRange     '0.9.0',
+25 silly addNameRange     '0.9.1',
+25 silly addNameRange     '0.9.2',
+25 silly addNameRange     '0.10.0',
+25 silly addNameRange     '0.10.1' ] ]
+26 verbose addNamed node-inspector@0.10.1
+27 silly addNamed semver.valid 0.10.1
+28 silly addNamed semver.validRange 0.10.1
+29 silly mapToRegistry name node-inspector
+30 silly mapToRegistry using default registry
+31 silly mapToRegistry registry https://registry.npmjs.org/
+32 silly mapToRegistry uri https://registry.npmjs.org/node-inspector
+33 verbose addRemoteTarball https://registry.npmjs.org/node-inspector/-/node-inspector-0.10.1.tgz not in flight; adding
+34 verbose addRemoteTarball [ 'https://registry.npmjs.org/node-inspector/-/node-inspector-0.10.1.tgz',
+34 verbose addRemoteTarball   '16d60ad17f82e9ecd9047a206bc16accf3b426b3' ]
+35 info retry fetch attempt 1 at 13:03:55
+36 info attempt registry request try #1 at 13:03:55
+37 http fetch GET https://registry.npmjs.org/node-inspector/-/node-inspector-0.10.1.tgz
+38 http fetch 200 https://registry.npmjs.org/node-inspector/-/node-inspector-0.10.1.tgz
+39 silly fetchAndShaCheck shasum 16d60ad17f82e9ecd9047a206bc16accf3b426b3
+40 verbose addTmpTarball C:\Users\IBM_AD~1\AppData\Local\Temp\npm-1436-4273c61d\registry.npmjs.org\node-inspector\-\node-inspector-0.10.1.tgz not in flight; adding
+41 verbose addTmpTarball already have metadata; skipping unpack for node-inspector@0.10.1
+42 silly cache afterAdd node-inspector@0.10.1
+43 verbose afterAdd C:\Users\IBM_ADMIN\AppData\Roaming\npm-cache\node-inspector\0.10.1\package\package.json not in flight; writing
+44 verbose afterAdd C:\Users\IBM_ADMIN\AppData\Roaming\npm-cache\node-inspector\0.10.1\package\package.json written
+45 silly install resolved [ { name: 'node-inspector',
+45 silly install resolved     version: '0.10.1',
+45 silly install resolved     description: 'Web Inspector based nodeJS debugger',
+45 silly install resolved     homepage: 'http://github.com/node-inspector/node-inspector',
+45 silly install resolved     author: { name: 'Danny Coates', email: 'dannycoates@gmail.com' },
+45 silly install resolved     keywords: [ 'debug', 'debugger', 'inspector', 'profiler' ],
+45 silly install resolved     repository:
+45 silly install resolved      { type: 'git',
+45 silly install resolved        url: 'http://github.com/node-inspector/node-inspector.git' },
+45 silly install resolved     engines: { node: '>=0.8.0' },
+45 silly install resolved     bin:
+45 silly install resolved      { 'node-inspector': './bin/inspector.js',
+45 silly install resolved        'node-debug': './bin/node-debug.js' },
+45 silly install resolved     dependencies:
+45 silly install resolved      { async: '~0.9',
+45 silly install resolved        'biased-opener': '~0.2.2',
+45 silly install resolved        debug: '^2.2.0',
+45 silly install resolved        express: '^4.12.3',
+45 silly install resolved        glob: '^5.0.5',
+45 silly install resolved        rc: '^1.0.1',
+45 silly install resolved        semver: '^4.3.4',
+45 silly install resolved        'serve-favicon': '^2.1.1',
+45 silly install resolved        'strong-data-uri': '^1.0.0',
+45 silly install resolved        'v8-debug': '~0.4.2',
+45 silly install resolved        'v8-profiler': '~5.2.4',
+45 silly install resolved        which: '^1.1.1',
+45 silly install resolved        ws: '^0.7.1',
+45 silly install resolved        yargs: '^3.9.0' },
+45 silly install resolved     devDependencies:
+45 silly install resolved      { mocha: '^1.21',
+45 silly install resolved        chai: '^1.9',
+45 silly install resolved        jshint: '^2.4.4',
+45 silly install resolved        'fs-extra': '~0.8.1' },
+45 silly install resolved     preferGlobal: true,
+45 silly install resolved     scripts:
+45 silly install resolved      { pretest: 'jshint .',
+45 silly install resolved        test: 'mocha',
+45 silly install resolved        'generate-front-end': 'node --harmony tools/generate-front-end' },
+45 silly install resolved     contributors:
+45 silly install resolved      [ [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object],
+45 silly install resolved        [Object] ],
+45 silly install resolved     gitHead: 'd747efec662d6f34b3e6b56c9ba0e9cbaf2f292f',
+45 silly install resolved     bugs: { url: 'https://github.com/node-inspector/node-inspector/issues' },
+45 silly install resolved     _id: 'node-inspector@0.10.1',
+45 silly install resolved     _shasum: '16d60ad17f82e9ecd9047a206bc16accf3b426b3',
+45 silly install resolved     _from: 'node-inspector@*',
+45 silly install resolved     _npmVersion: '2.5.1',
+45 silly install resolved     _nodeVersion: '0.12.0',
+45 silly install resolved     _npmUser: { name: '3y3', email: '3y3@bk.ru' },
+45 silly install resolved     dist:
+45 silly install resolved      { shasum: '16d60ad17f82e9ecd9047a206bc16accf3b426b3',
+45 silly install resolved        tarball: 'http://registry.npmjs.org/node-inspector/-/node-inspector-0.10.1.tgz' },
+45 silly install resolved     maintainers: [ [Object], [Object], [Object], [Object], [Object] ],
+45 silly install resolved     directories: {},
+45 silly install resolved     _resolved: 'https://registry.npmjs.org/node-inspector/-/node-inspector-0.10.1.tgz' } ]
+46 info install node-inspector@0.10.1 into c:\Program Files\nodejs
+47 info installOne node-inspector@0.10.1
+48 verbose installOne of node-inspector to c:\Program Files\nodejs not in flight; installing
+49 verbose lock using C:\Users\IBM_ADMIN\AppData\Roaming\npm-cache\_locks\node-inspector-85487f682e4c19d2.lock for c:\Program Files\nodejs\node_modules\node-inspector
+50 silly install write writing node-inspector 0.10.1 to c:\Program Files\nodejs\node_modules\node-inspector
+51 silly cache addNamed cb node-inspector@0.10.1
+52 verbose unbuild node_modules\node-inspector
+53 info preuninstall node-inspector@0.10.0
+54 info uninstall node-inspector@0.10.0
+55 verbose unbuild rmStuff node-inspector@0.10.0 from c:\Program Files\nodejs\node_modules
+56 verbose gentlyRm verifying that c:\Program Files\nodejs is managed by npm
+57 verbose gentlyRm verifying that c:\Program Files\nodejs is managed by npm
+58 silly isManaged c:\Program Files\nodejs\node_modules is inside c:\Program Files\nodejs
+59 silly gentlyRm c:\Program Files\nodejs is managed by npm
+60 silly gentlyRm c:\Program Files\nodejs\node-inspector.cmd is under c:\Program Files\nodejs
+61 verbose gentlyRm vacuuming c:\Program Files\nodejs\node-inspector.cmd up to c:\Program Files\nodejs
+62 silly isManaged c:\Program Files\nodejs is not inside c:\Program Files\nodejs\node_modules
+63 silly isManaged c:\Program Files\nodejs is not inside c:\Program Files\nodejs\node_modules
+64 silly isManaged c:\Program Files\nodejs is inside c:\Program Files\nodejs
+65 silly gentlyRm c:\Program Files\nodejs is managed by npm
+66 silly gentlyRm c:\Program Files\nodejs\node-debug.cmd is under c:\Program Files\nodejs
+67 verbose gentlyRm vacuuming c:\Program Files\nodejs\node-debug.cmd up to c:\Program Files\nodejs
+68 silly gentlyRm removing c:\Program Files\nodejs\node-inspector.cmd
+69 silly gentlyRm removing c:\Program Files\nodejs\node-debug.cmd
+70 verbose unlock done using C:\Users\IBM_ADMIN\AppData\Roaming\npm-cache\_locks\node-inspector-85487f682e4c19d2.lock for c:\Program Files\nodejs\node_modules\node-inspector
+71 verbose stack Error: EPERM, unlink 'c:\Program Files\nodejs\node-inspector.cmd'
+72 verbose cwd c:\git\twitter-search
+73 error Windows_NT 6.1.7601
+74 error argv "c:\\Program Files\\nodejs\\node.exe" "c:\\Users\\IBM_ADMIN\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "install" "-g" "node-inspector"
+75 error node v0.10.32
+76 error npm  v2.3.0
+77 error path c:\Program Files\nodejs\node-inspector.cmd
+78 error code EPERM
+79 error errno 50
+80 error Error: EPERM, unlink 'c:\Program Files\nodejs\node-inspector.cmd'
+80 error  { [Error: EPERM, unlink 'c:\Program Files\nodejs\node-inspector.cmd']
+80 error   errno: 50,
+80 error   code: 'EPERM',
+80 error   path: 'c:\\Program Files\\nodejs\\node-inspector.cmd' }
+81 error Please try running this command again as root/Administrator.
+82 verbose exit [ 50, true ]
+83 verbose unbuild node_modules\node-inspector
+84 info preuninstall node-inspector@0.10.0
+85 info uninstall node-inspector@0.10.0
+86 verbose unbuild rmStuff node-inspector@0.10.0 from c:\Program Files\nodejs\node_modules
+87 verbose gentlyRm verifying that c:\Program Files\nodejs is managed by npm
+88 silly isManaged c:\Program Files\nodejs is not inside c:\Program Files\nodejs\node_modules
+89 silly isManaged c:\Program Files\nodejs is not inside c:\Program Files\nodejs\node_modules
+90 silly isManaged c:\Program Files\nodejs is inside c:\Program Files\nodejs
+91 verbose gentlyRm verifying that c:\Program Files\nodejs is managed by npm
+92 silly isManaged c:\Program Files\nodejs is not inside c:\Program Files\nodejs\node_modules
+93 silly isManaged c:\Program Files\nodejs is not inside c:\Program Files\nodejs\node_modules
+94 silly isManaged c:\Program Files\nodejs is inside c:\Program Files\nodejs
+95 silly gentlyRm c:\Program Files\nodejs is managed by npm
+96 silly gentlyRm c:\Program Files\nodejs\node-inspector.cmd is under c:\Program Files\nodejs
+97 verbose gentlyRm vacuuming c:\Program Files\nodejs\node-inspector.cmd up to c:\Program Files\nodejs
+98 silly gentlyRm c:\Program Files\nodejs is managed by npm
+99 silly gentlyRm c:\Program Files\nodejs\node-debug.cmd is under c:\Program Files\nodejs
+100 verbose gentlyRm vacuuming c:\Program Files\nodejs\node-debug.cmd up to c:\Program Files\nodejs
+101 silly gentlyRm removing c:\Program Files\nodejs\node-inspector.cmd
+102 silly gentlyRm removing c:\Program Files\nodejs\node-debug.cmd
+103 error error rolling back Error: EPERM, unlink 'c:\Program Files\nodejs\node-inspector.cmd'
+103 error error rolling back  { [Error: EPERM, unlink 'c:\Program Files\nodejs\node-inspector.cmd']
+103 error error rolling back   errno: 50,
+103 error error rolling back   code: 'EPERM',
+103 error error rolling back   path: 'c:\\Program Files\\nodejs\\node-inspector.cmd' }
