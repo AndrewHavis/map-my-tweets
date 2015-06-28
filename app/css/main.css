@@ -72,3 +72,7 @@ span.what {
     border-bottom: 1px dotted black;
     font-weight: bold;
 }
+
+.map-canvas { 
+    height: 800px; 
+}

@@ -14,8 +14,7 @@ catch(err) {
     credentials = {};
 }
 var cf          = require('cfenv');
-var appEnv      = cf.getAppEnv({vcap: {services: credentials[1]}});
-
+var appEnv      = cf.getAppEnv({vcap: {services: credentials[0]}});
 
 // Set public directory and alias bower_components
 app.use(express.static(__dirname + '/app'));
@@ -24,8 +23,8 @@ app.use('/lib', express.static(__dirname + '/bower_components'));
 // If local, set credential variables
 if(appEnv.isLocal) {
     console.log('Environment: Local');
-    for(var key in credentials[0]) { 
-        process.env[key] = credentials[0][key]; 
+    for(var key in credentials) { 
+        process.env[key] = credentials[key]; 
     }
 }
 // If not, we're in Bluemix and environment variables are set
@@ -111,16 +110,41 @@ app.get('/api/twitter/lists/:listId/users/:userId', function(req, res) {
     });
 });
 
-// Confidence search API
-app.get('/api/twitter/users/:userQuery/:companyQuery', function(req, res) {
-    var userQuery = req.params.userQuery;
-    var companyQuery = req.params.companyQuery;
-    twitter.confidenceSearch(userQuery, companyQuery, function(result, error) {
+// Get a user's tweets
+app.get('/api/twitter/users/:userId/tweets', function(req, res) {
+    var userId = req.params.userId;
+    twitter.getTweets(userId, function(result, error) {
         if (!!error) {
             res.send(error);
         }
         else {
-            res.json(result);
+            res.send(result);
+        }
+    });
+});
+
+// Get a tweet
+app.get('/api/twitter/tweets/:tweetId', function(req, res) {
+    var tweetId = req.params.tweetId;
+    twitter.getTweet(tweetId, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.send(result);
+        }
+    });
+});
+
+// Get the location (latitude and longitude in GeoJSON format) of a tweet
+app.get('/api/twitter/tweets/:tweetId/geo', function(req, res) {
+    var tweetId = req.params.tweetId;
+    twitter.getTweetLocation(tweetId, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.send(result);
         }
     });
 });

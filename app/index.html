@@ -10,16 +10,23 @@
         
         <!-- Import Angular -->
         <script src="/lib/angular/angular.min.js"></script>
-        <script src="/controllers/main.js"></script>
         
         <!-- Import Bootstrap -->
         <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
         <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
         
+        <!-- Import Angular-UI-Maps (Google Maps API) -->
+        <script type="text/javascript" src="/lib/angular-ui-utils/ui-utils.min.js"></script>
+        <script type="text/javascript" src="/lib/angular-ui-map/ui-map.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;callback=onGoogleReady"></script>
+        
+        <!-- Load Angular controllers -->
+        <script src="/controllers/main.js"></script>
+        
         <!-- Import custom CSS styles -->
         <link type="text/css" rel="stylesheet" href="/css/main.css">
         
-        <title data-ng-bind="title">Twitter User Search</title>
+        <title data-ng-bind="title">Map My Tweets</title>
         
     </head>
     
@@ -34,41 +41,18 @@
             <div class="row">
                 <div class="col-md-12 search-form">
                     <form>
-                        <input type="text" data-ng-model="userSearch" placeholder="User Search" id="inputUserSearch" name="userQuery">
-                        <input type="text" data-ng-model="companySearch" placeholder="Company Search" id="inputCompanySearch" name="companyQuery">
-                        <button type="submit" data-ng-click="doUserSearch(userSearch, companySearch)">Search Twitter</button>
+                        <input type="text" data-ng-model="userSearch" placeholder="Enter a Twitter handle" id="inputUserSearch" name="userQuery">
+                        <button type="submit" data-ng-click="doUserSearch(userSearch)">Search Twitter</button>
                     </form>
                 </div>
             </div>
-            <div class="row" data-ng-show="userResults.length > 0">
-                <p><span class="count">{{userResults.length}}</span> user<span data-ng-hide="userResults.length === 1">s were</span> <span data-ng-show="userResults.length === 1">was</span> found. <span data-ng-show="!!companySearch">If a result is shaded green, this indicates that there is a fair level of confidence that the user is associated with {{companySearch}}. If a result is red, this means that the user is unlikely to be associated with the company. A numeric confidence score is also given in the bottom right-hand corner of each result.</span></p>
-                <div class="col-md-12" data-ng-repeat="u in userResults">
-                       <div class="col-md-12 user" data-ng-class="{confident: u.confidence >= 1, inconfident: u.confidence === 0}">
-                            <div class="row">
-                                <div class="col-md-8"><h2 class="username">{{u.name}}</h2></div>
-                                <div class="col-md-4"><span class="avatar"><img data-ng-src="{{u.profile_image_url_https}}" src="/images/twitter.svg" alt="Profile picture" width="48" height="48"></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12"><span class="handle">@{{u.screen_name}}</span></div>
-                            </div>
-                            <div class="row" data-ng-hide="!u.description">
-                                <div class="col-md-12"><span class="bio">{{u.description}}</span></div>
-                            </div>
-                            <div class="row" data-ng-hide="!u.location">
-                                <div class="col-md-12"><span class="location">{{u.location}}</span></div>
-                            </div>
-                            <div class="row">
-                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}'><span class="tweet-count">{{u.statuses_count}}</span> tweets</div>
-                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}'><span class="follower-count">{{u.followers_count}}</span> followers</div>
-                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}'><span class="following-count">{{u.friends_count}}</span> following</div>
-                                <div data-ng-class='{"col-md-3 col-sm-3 count": u.confidence >= 0, "col-md-4 col-sm-4 count": !u.confidence}' data-ng-show="u.confidence >= 0"><span class="confidence-level">{{u.confidence}}</span> confidence</div>
-                            </div>
-                            </div>
-                       </div>
-                </div>
+            <div class="row" data-ng-show="userResults.length === 1">
+                <section id="map" data-ng-controller="MapCtrl">
+                    <div data-ui-map="myMap" data-ui-options="mapOptions" class="map-canvas"></div>
+                </section>
             </div>
             <div class="col-md-12 row" data-ng-hide="userResults.length > 0">
-                <p>Please search for Twitter users using the box above. The company name is optional.</p>
+                <p>Please enter a Twitter handle in the box above.</p>
             </div>
         </div>
         
