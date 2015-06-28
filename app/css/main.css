@@ -73,6 +73,6 @@ span.what {
     font-weight: bold;
 }
 
-.map-canvas { 
-    height: 800px; 
+.angular-google-map-container { 
+    height: 700px; 
 }

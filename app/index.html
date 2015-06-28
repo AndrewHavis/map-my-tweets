@@ -16,9 +16,8 @@
         <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
         
         <!-- Import Angular-UI-Maps (Google Maps API) -->
-        <script type="text/javascript" src="/lib/angular-ui-utils/ui-utils.min.js"></script>
-        <script type="text/javascript" src="/lib/angular-ui-map/ui-map.min.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;callback=onGoogleReady"></script>
+        <script src='/lib/lodash/lodash.min.js'></script>
+        <script src='/lib/angular-google-maps/dist/angular-google-maps.min.js'></script>
         
         <!-- Load Angular controllers -->
         <script src="/controllers/main.js"></script>
@@ -46,13 +45,13 @@
                     </form>
                 </div>
             </div>
-            <div class="row" data-ng-show="userResults.length === 1">
-                <section id="map" data-ng-controller="MapCtrl">
-                    <div data-ui-map="myMap" data-ui-options="mapOptions" class="map-canvas"></div>
-                </section>
-            </div>
             <div class="col-md-12 row" data-ng-hide="userResults.length > 0">
                 <p>Please enter a Twitter handle in the box above.</p>
+            </div>
+            <div class="col-md-12 row">
+                <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                    <ui-gmap-markers models="locations" coords="'self'" icon="'icon'" idKey="'idKey'"></ui-gmap-markers>
+                </ui-gmap-google-map>
             </div>
         </div>
         
