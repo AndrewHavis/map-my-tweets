@@ -25,7 +25,32 @@ app.controller('MainCtrl', function($scope, $http) {
         $scope.title = 'Tweet Map for ' + userQuery;
         
         // Initialise our Google map
-        $scope.map = { center: { latitude: 0, longitude: 0 }, zoom: 2 };
+        $scope.map = { 
+            center: { 
+                latitude: 0, 
+                longitude: 0 
+            }, 
+            zoom: 2,
+            markers: [],
+            markersEvents: {
+                click: function(marker, eventName, model, arguments) {
+                    console.log(marker);
+                    console.log(eventName);
+                    console.log(model);
+                    console.log(arguments);
+                    $scope.map.window.model = model;
+                    $scope.map.window.show = true;
+                }
+            },
+            window: {
+                marker: {},
+                show: false,
+                closeClick: function() {
+                    this.show = false;
+                },
+                options: {} // define when map is ready
+            }
+        };
         $scope.locations = [];
         
         // Now let's get the user's tweets
@@ -33,6 +58,7 @@ app.controller('MainCtrl', function($scope, $http) {
         .success(function(res) {
             
             $scope.tweets = res;
+            $scope.showWindow = false;
             
             var item = {};
             
@@ -43,7 +69,7 @@ app.controller('MainCtrl', function($scope, $http) {
                     item.idKey = res[i].id;
                     item.latitude = res[i].geo.coordinates[0];
                     item.longitude = res[i].geo.coordinates[1];
-                    item.title = res[i].text;
+                    item.tweet = res[i].text;
                     $scope.locations.push(item);
                 }
                 else if (res[i].place !== null) {
@@ -51,10 +77,13 @@ app.controller('MainCtrl', function($scope, $http) {
                     item.idKey = res[i].id;
                     item.latitude = res[i].place.bounding_box.coordinates[0][0][1];
                     item.longitude = res[i].place.bounding_box.coordinates[0][0][0];
-                    item.title = res[i].text;
+                    item.tweet = res[i].text;
                     $scope.locations.push(item);
                 }
             }
+            
+            $scope.map.markers = $scope.locations;
+            
         });
     })
     .error(function(error) {
