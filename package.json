@@ -1,7 +1,7 @@
 {
-  "name": "TwitterUserSearch",
+  "name": "MapTweets",
   "version": "0.0.1",
-  "description": "This is a simple application that searches for Twitter users",
+  "description": "Show the locations of your geotagged tweets on a Google map",
   "scripts": {
     "start": "node app.js"
   },
