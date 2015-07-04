@@ -2,5 +2,5 @@ applications:
   - name: maptweets
   - command: node app.js
   - path: .
-  - memory: 64M
+  - memory: 64
   - instances: 1
