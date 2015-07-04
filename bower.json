@@ -27,6 +27,7 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.4",
-    "angular": "~1.4.0"
+    "angular": "~1.4.0",
+    "angular-google-maps": "~2.1.5"
   }
 }
