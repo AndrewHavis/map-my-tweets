@@ -118,7 +118,7 @@ module.exports.isUserInList = function(userId, listId, callback) {
 
 // Get a user's tweets
 module.exports.getTweets = function(userId, callback) {
-    twitter.get('statuses/user_timeline', {user_id: userId}, function(err, tweets, res) {
+    twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1}, function(err, tweets, res) {
         if (!!err) {
             return callback(null, new Error('An error occurred when retrieving tweets\n' + JSON.stringify(err)));
         }
@@ -143,53 +143,67 @@ module.exports.getTweet = function(tweetId, callback) {
 }
 
 // Get tweet location
-module.exports.getTweetLocation = function(tweetId, callback) {
-    twitter.get('statuses/show', {id: tweetId}, function(err, tweet, res) {
+module.exports.getLocations = function(userId, callback) {
+    twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1}, function(err, tweets, res) {
         if (!!err) {
-            return callback(null, new Error('An error occurred when getting tweet location\n' + JSON.stringify(err)));
+            return callback(null, new Error('An error occurred when getting tweet locations\n' + JSON.stringify(err)));
         }
         else {
-            var tweetObj = JSON.parse(JSON.stringify(tweet));
+            var geoJSON = [];
+            for (t in tweets) {
+                var tweetObj = JSON.parse(JSON.stringify(tweets[t]));
+
+                // To get the location, we'll pull the 'geo' property
+                // If the property is null (i.e. the tweet isn't geotagged), return null
+                if (tweetObj.geo !== null) {
+
+                    // To make things easier, we'll use the GeoJSON formatting
+                    // Note that for some unknown reason, Twitter reverses the latitude and longitude
+                    // We will correct this here
+                    var geoObj = {};
+                    geoObj.idKey = tweetObj.id;
+                    geoObj.tweet = tweetObj.text;
+                    geoObj.user = {};
+                    geoObj.user.id = tweetObj.user.id;
+                    geoObj.user.name = tweetObj.user.name;
+                    geoObj.user.handle = tweetObj.user.screen_name;
+                    geoObj.type = "Point";
+                    geoObj.geometry = {};
+                    geoObj.geometry.type = "Point";
+                    geoObj.geometry.coordinates = tweetObj.geo.coordinates.reverse();
+                    geoJSON.push(geoObj);
+                
+                }
             
-            // To get the location, we'll pull the 'geo' property
-            // If the property is null (i.e. the tweet isn't geotagged), return null
-            if (tweetObj.geo !== null) {
-                
-                // To make things easier, we'll use the GeoJSON formatting
-                // Note that for some unknown reason, Twitter reverses the latitude and longitude
-                // We will correct this here
-                var geoJSON = {};
-                geoJSON.type = "Point";
-                geoJSON.geometry = {};
-                geoJSON.geometry.type = "Point";
-                geoJSON.geometry.coordinates = tweetObj.geo.coordinates.reverse();
-                
-                // Return the GeoJSON
-                return callback(geoJSON);
-                
-            }
-            else if (tweetObj.place !== null) {
-                
-                // Try the 'place' object
-                // Note that if we have a polygon or bounding box, we will take the first set of coordinates
-                var geoJSON = {};
-                geoJSON.type = "Point";
-                geoJSON.geometry = {};
-                geoJSON.geometry.type = "Point";
-                if (tweetObj.place.bounding_box.type === "Polygon") {
-                    geoJSON.geometry.coordinates = tweetObj.place.bounding_box.coordinates[0][0].reverse();
+                else if (tweetObj.place !== null) {
+
+                    // Try the 'place' object
+                    // Note that if we have a polygon or bounding box, we will take the first set of coordinates
+                    var geoObj = {};
+                    geoObj.idKey = tweetObj.id;
+                    geoObj.tweet = tweetObj.text;
+                    geoObj.user = {};
+                    geoObj.user.id = tweetObj.user.id;
+                    geoObj.user.name = tweetObj.user.name;
+                    geoObj.user.handle = tweetObj.user.screen_name;
+                    geoObj.type = "Point";
+                    geoObj.geometry = {};
+                    geoObj.geometry.type = "Point";
+                    if (tweetObj.place.bounding_box.type === "Polygon") {
+                        geoObj.geometry.coordinates = tweetObj.place.bounding_box.coordinates[0][0].reverse();
+                    }
+                    else {
+                        geoObj.geometry.coordinates = tweetObj.place.bounding_box.coordinates.reverse();
+                    }
+                    geoJSON.push(geoObj);
+                    
                 }
-                else {
-                    geoJSON.geometry.coordinates = tweetObj.place.bounding_box.coordinates.reverse();
-                }
-                
-                // Return the GeoJSON
-                return callback(geoJSON);
-                
+
             }
-            else {
-                return callback(null);
-            }
+            
+            // Return the GeoJSON
+            return callback(geoJSON);
+        
         }
     })
 }

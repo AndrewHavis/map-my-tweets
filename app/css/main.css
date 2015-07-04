@@ -73,6 +73,12 @@ span.what {
     font-weight: bold;
 }
 
+img.img-btn-twitter-sign-in {
+    text-align: center;
+    width: 158px;
+    height: 28px;
+}
+
 .angular-google-map-container { 
     height: 700px; 
 }

@@ -42,11 +42,56 @@ var cloudant = require('./server/api/cloudant.js');
 
 var twitter = require('./server/api/twitter.js');
 
+// ************ Passport ****************
+
+var passport = require('passport');
+
+// **************************************
+
+// These extra four lines are for Passport
+var session = require('express-session');
+app.use(session({
+    secret: 'KDXHICPKLQEMZOLL',
+    resave: true,
+    saveUninitialized: false
+})); // Session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
 // Set up our API routes
 
+// Authentication (npm passport / npm passport-twitter)
+var TwitterStrategy = require('passport-twitter').Strategy;
+var User = {};
+passport.use(new TwitterStrategy({
+    consumerKey: process.env.consumer_key,
+    consumerSecret: process.env.consumer_secret,
+    callbackURL: "http://localhost:6001/auth/twitter/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+    User = {
+        id: profile.id,
+        name: profile.displayName,
+        handle: profile.username
+    };
+    this.redirect('/');
+  }
+));
+
+app.get('/auth/twitter',
+  passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', 
+  passport.authenticate('twitter', { failureRedirect: '/' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
 // User search
-app.get('/api/twitter/users/:query', function(req, res) {
-    var query = req.params.query;
+app.get('/api/twitter/profile', function(req, res) {
+    var query = User.handle;
     twitter.userSearch(query, function(results, error) {
         if (!!error) {
             res.send(error);
@@ -57,74 +102,10 @@ app.get('/api/twitter/users/:query', function(req, res) {
     });
 });
 
-app.get('/api/twitter/users/:query/id', function(req, res) {
-    var query = req.params.query;
-    twitter.getUserId(query, function(results, error) {
-        if (!!error) {
-            res.send(error);
-        }
-        else {
-            res.json(results);
-        }
-    });
-});
 
-// Get follows
-app.get('/api/twitter/users/:query/follows', function(req, res) {
-    var query = req.params.query;
-    twitter.getFollows(query, function(results, error) {
-        if (!!error) {
-            res.send(error);
-        }
-        else {
-            res.json(results);
-        }
-    });
-});
-
-// Get owned lists
-app.get('/api/twitter/users/:query/lists', function(req, res) {
-    var query = req.params.query;
-    twitter.getOwnedLists(query, function(results, error) {
-        if (!!error) {
-            res.send(error);
-        }
-        else {
-            res.json(results);
-        }
-    });
-});
-
-// Get list by ID
-app.get('/api/twitter/lists/:id', function(req, res) {
-    var listId = req.params.id;
-    twitter.getList(listId, function(result, error) {
-        if (!!error) {
-            res.send(error);
-        }
-        else {
-            res.json(result);
-        }
-    }); 
-});
-
-// Determine whether a given user is in a specified list
-app.get('/api/twitter/lists/:listId/users/:userId', function(req, res) {
-    var listId = req.params.listId;
-    var userId = req.params.userId;
-    twitter.isUserInList(userId, listId, function(result, error) {
-        if (!!error) {
-            res.send(error);
-        }
-        else {
-            res.send(result);
-        }
-    });
-});
-
-// Get a user's tweets
-app.get('/api/twitter/users/:userId/tweets', function(req, res) {
-    var userId = req.params.userId;
+// Get tweets
+app.get('/api/twitter/tweets', function(req, res) {
+    var userId = User.id;
     twitter.getTweets(userId, function(result, error) {
         if (!!error) {
             res.send(error);
@@ -135,23 +116,11 @@ app.get('/api/twitter/users/:userId/tweets', function(req, res) {
     });
 });
 
-// Get a tweet
-app.get('/api/twitter/tweets/:tweetId', function(req, res) {
-    var tweetId = req.params.tweetId;
-    twitter.getTweet(tweetId, function(result, error) {
-        if (!!error) {
-            res.send(error);
-        }
-        else {
-            res.send(result);
-        }
-    });
-});
 
 // Get the location (latitude and longitude in GeoJSON format) of a tweet
-app.get('/api/twitter/tweets/:tweetId/geo', function(req, res) {
-    var tweetId = req.params.tweetId;
-    twitter.getTweetLocation(tweetId, function(result, error) {
+app.get('/api/twitter/locations', function(req, res) {
+    var userId = User.id;
+    twitter.getLocations(userId, function(result, error) {
         if (!!error) {
             res.send(error);
         }
