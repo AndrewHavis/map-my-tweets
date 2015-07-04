@@ -1,5 +1,4 @@
 applications:
-- services:
   name: tweetmaps
   command: node app.js
   path: .
