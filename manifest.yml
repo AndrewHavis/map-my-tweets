@@ -1,5 +1,5 @@
 applications:
-  name: maptweets
+  - name: maptweets
   command: node app.js
   path: .
   memory: 64M
