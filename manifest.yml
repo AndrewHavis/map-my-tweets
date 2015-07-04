@@ -1,8 +1,6 @@
 applications:
 - services:
-  - cloudant
-  - Insights for Twitter-aa
-  name: twitter-search
+  name: tweetmaps
   command: node app.js
   path: .
   memory: 256M
