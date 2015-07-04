@@ -32,12 +32,6 @@ else {
     console.log('Environment: Bluemix');
 }
 
-// ************ Cloudant API  ************
-
-var cloudant = require('./server/api/cloudant.js');
-
-// **************************************
-
 // ************ Twitter API *************
 
 var twitter = require('./server/api/twitter.js');
@@ -66,7 +60,7 @@ var User = {};
 passport.use(new TwitterStrategy({
     consumerKey: process.env.consumer_key,
     consumerSecret: process.env.consumer_secret,
-    callbackURL: "http://localhost:6001/auth/twitter/callback"
+    callbackURL: "http://maptweets.eu-gb.mybluemix.net/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
     User = {
@@ -144,12 +138,6 @@ var io = socketIo.listen(app.listen(appEnv.port, appEnv.bind, function(){
 	console.log('App ready - to quit, please press CTRL+C');
 }));
 
-// Set up API routes
-app.get('/api/cloudant', function(req, res) {
-    cloudant.exportData('test', function(result) {
-        res.json(result);
-    });
-});
 
 // Keep track of number of connected users
 var connectCounter = 0;

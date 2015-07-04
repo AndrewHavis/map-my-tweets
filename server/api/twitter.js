@@ -9,9 +9,6 @@
 // Import the Twitter module
 var Twitter = require('twitter');
 
-// Import Cloudant
-var cloudant = require('./cloudant');
-
 // Import our API controller
 var api = require('../controllers/api.ctrl.js');
 
