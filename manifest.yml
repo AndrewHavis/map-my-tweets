@@ -1,5 +1,5 @@
 applications:
-  name: tweetmaps
+  - name: tweetmaps
   command: node app.js
   path: .
   memory: 256M
