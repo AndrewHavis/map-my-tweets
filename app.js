@@ -60,7 +60,7 @@ var User = {};
 passport.use(new TwitterStrategy({
     consumerKey: process.env.consumer_key,
     consumerSecret: process.env.consumer_secret,
-    callbackURL: "http://maptweets.eu-gb.mybluemix.net/auth/twitter/callback"
+    callbackURL: "http://maptweets.andrew-havis.co.uk/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
     User = {

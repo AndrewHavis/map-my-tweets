@@ -2,6 +2,7 @@
     "jscodehints.detectedExclusions": [
         "C:/Users/Andrew Havis/git/tweetmaps/bower_components/jquery/src/outro.js",
         "sizzle.js",
-        "C:/Users/Andrew Havis/git/tweetmaps/server/api/twitter.js"
+        "C:/Users/Andrew Havis/git/tweetmaps/server/api/twitter.js",
+        "C:/Users/Andrew Havis/git/tweetmaps/bower_components/jquery/src/manipulation/_evalUrl.js"
     ]
 }
