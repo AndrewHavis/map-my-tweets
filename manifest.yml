@@ -1,7 +1,5 @@
 applications:
-- services:
-  - Insights for Twitter-aa
-  name: maptweets
-  command: node app.js
-  path: .
-  memory: 256M
+- name: maptweets
+command: node app.js
+path: .
+memory: 64M
