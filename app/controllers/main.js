@@ -71,8 +71,8 @@ app.controller('MainCtrl', function($scope, $http) {
             for (var i = 0; i < $scope.locationResults.length; i++) {
                 mark = {}; // Reset our marker object
                 mark.idKey = $scope.locationResults[i].idKey;
-                mark.latitude = $scope.locationResults[i].geometry.coordinates[0];
-                mark.longitude = $scope.locationResults[i].geometry.coordinates[1];
+                mark.latitude = $scope.locationResults[i].geometry.coordinates[1];
+                mark.longitude = $scope.locationResults[i].geometry.coordinates[0];
                 mark.tweet = $scope.locationResults[i].tweet;
                 $scope.locations.push(mark);
             }
