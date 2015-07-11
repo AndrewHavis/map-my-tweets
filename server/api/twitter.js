@@ -187,10 +187,10 @@ module.exports.getLocations = function(userId, callback) {
                     geoObj.geometry = {};
                     geoObj.geometry.type = "Point";
                     if (tweetObj.place.bounding_box.type === "Polygon") {
-                        geoObj.geometry.coordinates = tweetObj.place.bounding_box.coordinates[0][0].reverse();
+                        geoObj.geometry.coordinates = tweetObj.place.bounding_box.coordinates[0][0];
                     }
                     else {
-                        geoObj.geometry.coordinates = tweetObj.place.bounding_box.coordinates.reverse();
+                        geoObj.geometry.coordinates = tweetObj.place.bounding_box.coordinates;
                     }
                     geoJSON.push(geoObj);
                     
