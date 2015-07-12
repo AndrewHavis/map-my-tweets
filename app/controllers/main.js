@@ -1,4 +1,4 @@
-var app = angular.module('app', ['uiGmapgoogle-maps', 'ngEmbed']);
+var app = angular.module('app', ['uiGmapgoogle-maps']);
 
 app.config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
@@ -8,33 +8,10 @@ app.config(function(uiGmapGoogleMapApiProvider) {
     });
 });
 
-app.controller('MainCtrl', function($scope, $http) {
+app.controller('MainCtrl', function($scope, $http, $timeout, embedService) {
     
 	$scope.title = 'Map My Tweets';
 	$scope.test = 'Hello, World!';
-    
-    // ngEmbed options
-    $scope.options = {
-      link             : true,      //convert links into anchor tags
-      linkTarget       : '_blank',   //_blank|_self|_parent|_top|framename
-      tweetEmbed       : true,
-      tweetOptions     : {
-          //The maximum width of a rendered Tweet in whole pixels. Must be between 220 and 550 inclusive.
-          maxWidth  : 550,
-          //When set to true or 1 links in a Tweet are not expanded to photo, video, or link previews.
-          hideMedia : false,
-          //When set to true or 1 a collapsed version of the previous Tweet in a conversation thread
-          //will not be displayed when the requested Tweet is in reply to another Tweet.
-          hideThread: true,
-          //Specifies whether the embedded Tweet should be floated left, right, or center in
-          //the page relative to the parent element.Valid values are left, right, center, and none.
-          //Defaults to none, meaning no alignment styles are specified for the Tweet.
-          align     : 'none',
-          //Request returned HTML and a rendered Tweet in the specified.
-          //Supported Languages listed here (https://dev.twitter.com/web/overview/languages)
-          lang      : 'en'
-      }
-    };
     
     $http.get('/api/twitter/profile/')
     .success(function(response) {
@@ -58,7 +35,6 @@ app.controller('MainCtrl', function($scope, $http) {
             $scope.userId = response[0].user.id; // Get the user ID
             $scope.userName = response[0].user.name; // Get the user name
             $scope.userHandle = response[0].user.handle; // Get the user handle
-
 
             // Initialise our Google map
             $scope.map = { 
@@ -93,16 +69,29 @@ app.controller('MainCtrl', function($scope, $http) {
 
             for (var i = 0; i < $scope.locationResults.length; i++) {
                 mark = {}; // Reset our marker object
+                
+                // Get our properties (except the embed HTML)
                 mark.idKey = $scope.locationResults[i].idKey;
                 mark.latitude = $scope.locationResults[i].geometry.coordinates[1];
                 mark.longitude = $scope.locationResults[i].geometry.coordinates[0];
                 mark.tweet = $scope.locationResults[i].tweet;
                 mark.url = 'http://twitter.com/' + $scope.userHandle + '/status/' + $scope.locationResults[i].idKey;
-                $scope.locations.push(mark);
+                
+                // Now get our embed HTML
+                var embedHTML = embedService.getEmbedHTML(mark.idKey);
+                embedHTML.then(function(res) {
+                    console.log(res);
+                    mark.embedHTML = res.data.html;
+                });
+                
+                // Now push all of this to our array - note we impose a slight delay here so the embed HTML adds in time
+                $timeout(function() { $scope.locations.push(mark); }, 1000);
+                
             }
 
             // Populate the map with our geotagged tweets
             $scope.map.markers = $scope.locations;
+            
         }
             
     })
@@ -111,4 +100,12 @@ app.controller('MainCtrl', function($scope, $http) {
         console.log('There was an error retrieving the location results from the API');
         console.log(error);
     });
+});
+
+app.factory('embedService', function($http) {
+    return {
+        getEmbedHTML: function(tweetId) {
+            return $http.get('/api/twitter/tweet/' + tweetId + '/embed');
+        }
+    }
 });

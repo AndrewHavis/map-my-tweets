@@ -10,7 +10,6 @@
     "cloudant": "^1.0.0-beta3",
     "express": "^4.12.4",
     "express-session": "^1.11.3",
-    "ng-embed": "^2.0.2",
     "passport": "^0.2.2",
     "passport-twitter": "^1.0.3",
     "request": "^2.55.0",

@@ -124,6 +124,19 @@ app.get('/api/twitter/locations', function(req, res) {
     });
 });
 
+// Get the embed code for a tweet
+app.get('/api/twitter/tweet/:tweetId/embed', function(req, res) {
+    var tweetId = req.params.tweetId;
+    twitter.getEmbedCode(tweetId, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.send(result);
+        }
+    });
+});
+
 
 // **************************************
 

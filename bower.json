@@ -29,8 +29,6 @@
     "bootstrap": "~3.3.4",
     "angular": "~1.4.0",
     "angular-google-maps": "~2.1.5",
-    "ng-embed": "~2.0.2",
-    "jquery": "~2.1.4",
-    "highlightjs": "~8.6.0"
+    "jquery": "~2.1.4"
   }
 }

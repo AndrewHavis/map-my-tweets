@@ -45,74 +45,6 @@ module.exports.getUserId = function(query, callback) {
     });
 }
 
-module.exports.getFollows = function(userId, callback) {
-    twitter.get('friends/list', {user_id: userId}, function(err, follows, res) {
-        if (!!err) {
-            return callback(null, new Error('An error occurred when finding follows\n' + JSON.stringify(err)));
-        }
-        else {
-            var followsObj = JSON.parse(JSON.stringify(follows));
-            return callback(followsObj);
-        }
-    })
-}
-
-// Get a feed of the lists owned by a specified user
-module.exports.getOwnedLists = function(userId, callback) {
-    twitter.get('lists/ownerships', {user_id: userId}, function(err, lists, res) {
-        if (!!err) {
-            return callback(null, new Error('An error occurred when retrieving owned lists\n' + JSON.stringify(err)));
-        }
-        else {
-            var listsObj = JSON.parse(JSON.stringify(lists));
-            return callback(listsObj);
-        }
-    });
-}
-
-// Get a specific list
-module.exports.getList = function(listId, callback) {
-    twitter.get('lists/members', {list_id: listId}, function(err, list, res) {
-        if (!!err) {
-            return callback(null, new Error('An error occurred when retrieving a list\n' + JSON.stringify(err)));
-        }
-        else {
-            var listObj = JSON.parse(JSON.stringify(list));
-            return callback(listObj);
-        }
-    });
-}
-
-// Determine whether a user is in a specified list
-module.exports.isUserInList = function(userId, listId, callback) {
-    var userFoundInList = false;
-    var users = [];
-    module.exports.getList(listId, function(res, err) {
-        if (!!err) {
-            return callback(null, new Error('An error occurred when determining whether a user is in a list\n' + JSON.stringify(err)));
-        }
-        // Loop through the list items
-        users = res.users;
-        for (var i = 0; i < users.length; i++) {
-            
-            var item = users[i];
-            
-            // Get the user ID
-            var foundUserId = item.id;
-            
-            // If the specified user ID matches the ID we've found, set userFoundInList to true
-            if (userId == foundUserId) {
-                userFoundInList = true;
-                break;
-            }
-        }
-        
-        // Return our result
-        return callback(userFoundInList);
-        
-    })
-}
-
 // Get a user's tweets
 module.exports.getTweets = function(userId, callback) {
     twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1}, function(err, tweets, res) {
@@ -201,6 +133,19 @@ module.exports.getLocations = function(userId, callback) {
             // Return the GeoJSON
             return callback(geoJSON);
         
+        }
+    })
+}
+
+// Get the embed code for a tweet
+module.exports.getEmbedCode = function(tweetId, callback) {
+    twitter.get('statuses/oembed', {id: tweetId}, function(err, embedCode, res) {
+        if (!!err) {
+            return callback(null, new Error('An error occurred when retrieving the tweet embed code\n' + JSON.stringify(err)));
+        }
+        else {
+            var embedObj = JSON.parse(JSON.stringify(embedCode));
+            return callback(embedObj);
         }
     })
 }
