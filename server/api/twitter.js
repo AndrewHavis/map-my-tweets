@@ -158,7 +158,7 @@ module.exports.getLocations = function(userId, callback) {
                     // Note that for some unknown reason, Twitter reverses the latitude and longitude
                     // We will correct this here
                     var geoObj = {};
-                    geoObj.idKey = tweetObj.id;
+                    geoObj.idKey = tweetObj.id_str; // Use id_str to get the *actual* tweet ID
                     geoObj.tweet = tweetObj.text;
                     geoObj.user = {};
                     geoObj.user.id = tweetObj.user.id;
@@ -177,7 +177,7 @@ module.exports.getLocations = function(userId, callback) {
                     // Try the 'place' object
                     // Note that if we have a polygon or bounding box, we will take the first set of coordinates
                     var geoObj = {};
-                    geoObj.idKey = tweetObj.id;
+                    geoObj.idKey = tweetObj.id_str; // Use id_str to get the *actual* tweet ID
                     geoObj.tweet = tweetObj.text;
                     geoObj.user = {};
                     geoObj.user.id = tweetObj.user.id;

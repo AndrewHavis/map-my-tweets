@@ -19,6 +19,14 @@
         <script src='/lib/lodash/lodash.min.js'></script>
         <script src='/lib/angular-google-maps/dist/angular-google-maps.min.js'></script>
         
+        <!-- Import jQuery, HighlightJS and ngEmbed -->
+        <script src="/lib/jquery/dist/jquery.min.js"></script>
+        <script src="//platform.twitter.com/widgets.js"></script>
+        <script src="/lib/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="/lib/highlightjs/highlight.pack.js"></script>
+        <link rel="stylesheet" href="/lib/ng-embed/dist/ng-embed.min.css">
+        <script src="/lib/ng-embed/dist/ng-embed.min.js"></script>
+        
         <!-- Load Angular controllers -->
         <script src="/controllers/main.js"></script>
         
@@ -55,7 +63,8 @@
                 <ui-gmap-google-map center='map.center' zoom='map.zoom'>
                     <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" idKey="'idKey'" events="map.markersEvents">
                         <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeclick="map.window.closeClick()" ng-cloak>
-                            <p class="tweet">{{map.window.model.tweet}}</p>
+                            <!-- <p class="tweet">{{map.window.model.tweet}}</p> -->
+                            <ng-embed embed-data="test" embed-options="options"></ng-embed>
                         </ui-gmap-window>
                     </ui-gmap-markers>
                 </ui-gmap-google-map>
