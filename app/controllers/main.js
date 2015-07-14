@@ -8,33 +8,41 @@ app.config(function(uiGmapGoogleMapApiProvider) {
     });
 });
 
-app.controller('MainCtrl', function($scope, $http, $q, embedService) {
+app.controller('MainCtrl', function($scope, $http, $q, apiService) {
     
 	$scope.title = 'Map My Tweets';
 	$scope.test = 'Hello, World!';
     
-    $http.get('/api/twitter/profile/')
-    .success(function(response) {
-        $scope.profileJSON = response;
-        $scope.title = 'Tweet Map for ' + response.name; // Put together our page title
-    })
-    .error(function(error) {
-        $scope.title = 'Map My Tweets';
-        console.log('There was an error retrieving the user results from the API');
-        console.log(error);
+    // Get results from our API service
+    $scope.profileJSON = apiService.getProfile();
+    $scope.locationJSON = apiService.getLocations();
+    $scope.embeds = [];
+    
+    // Set our title
+    $scope.profileJSON.then(function(profile) {
+        console.log(profile);
+        $scope.title = 'Tweet Map for ' + profile.data.name;
     });
-           
-    $http.get('/api/twitter/locations/')
-    .success(function(response) {
+    
+    // Get our embed HTML
+    $scope.locationJSON.then(function(locations) {
+        console.log(locations);
+        for (loc in locations.data) {
+            console.log(locations.data[loc]);
+            apiService.getEmbedHTML(locations.data[loc].idKey).then(function(embed) {
+                console.log(embed.data);
+                $scope.embeds[loc] = embed.data.html;
+            });
+        }
+    });
         
-        
-        // Fetch the user information from the API if we have anything
-        if (response.length > 0) {    
-            $scope.locationResults = response;
+    // Now use our locations API to put together our markers
+    $scope.locationJSON.then(function(locations) {
+        if (locations.data.length > 0) {    
             $scope.locations = [];
-            $scope.userId = response[0].user.id; // Get the user ID
-            $scope.userName = response[0].user.name; // Get the user name
-            $scope.userHandle = response[0].user.handle; // Get the user handle
+            $scope.userId = locations.data[0].user.id; // Get the user ID
+            $scope.userName = locations.data[0].user.name; // Get the user name
+            $scope.userHandle = locations.data[0].user.handle; // Get the user handle
 
             // Initialise our Google map
             $scope.map = { 
@@ -67,45 +75,46 @@ app.controller('MainCtrl', function($scope, $http, $q, embedService) {
             // Collate the information for our map markers
             var mark = {};
 
-            for (var i = 0; i < $scope.locationResults.length; i++) {
+            for (var i = 0; i < locations.data.length; i++) {
                 mark = {}; // Reset our marker object
-                
+
                 // Get our properties (except the embed HTML)
-                mark.idKey = $scope.locationResults[i].idKey;
-                mark.latitude = $scope.locationResults[i].geometry.coordinates[1];
-                mark.longitude = $scope.locationResults[i].geometry.coordinates[0];
-                mark.tweet = $scope.locationResults[i].tweet;
-                mark.url = 'http://twitter.com/' + $scope.userHandle + '/status/' + $scope.locationResults[i].idKey;
-                
+                mark.idKey = locations.data[i].idKey;
+                mark.latitude = locations.data[i].geometry.coordinates[1];
+                mark.longitude = locations.data[i].geometry.coordinates[0];
+                mark.tweet = locations.data[i].tweet;
+                mark.url = 'http://twitter.com/' + $scope.userHandle + '/status/' + locations.data[i].idKey;
+
                 // Now get our embed HTML
-                var embedHTML = embedService.getEmbedHTML(mark.idKey);
-                embedHTML.then(function(res) {
-                    console.log(res);
-                    mark.embedHTML = res.data.html;
-                });
+                mark.embedHTML = $scope.embeds[i];
                 
                 // Now push all of this to our array - note we impose a slight delay here so the embed HTML adds in time
-                $timeout(function() { $scope.locations.push(mark); }, 1000);
-                
+                $scope.locations.push(mark);
+
             }
 
             // Populate the map with our geotagged tweets
             $scope.map.markers = $scope.locations;
-            
+
         }
-            
-    })
-    .error(function(error) {
-        $scope.title = 'Map My Tweets';
-        console.log('There was an error retrieving the location results from the API');
-        console.log(error);
+    
     });
+                             
 });
 
-app.factory('embedService', function($http) {
+app.factory('apiService', function($http, $q) {
     return {
+        getProfile: function() {
+            var promise = $http.get('/api/twitter/profile/');
+            return $q.when(promise);
+        },
+        getLocations: function() {
+            var promise = $http.get('/api/twitter/locations/');
+            return $q.when(promise);
+        },
         getEmbedHTML: function(tweetId) {
-            return $http.get('/api/twitter/tweet/' + tweetId + '/embed');
+            var promise = $http.get('/api/twitter/tweet/' + tweetId + '/embed');
+            return $q.when(promise);
         }
     }
 });
