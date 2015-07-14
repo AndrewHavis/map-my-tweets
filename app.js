@@ -68,6 +68,7 @@ passport.use(new TwitterStrategy({
         name: profile.displayName,
         handle: profile.username
     };
+    console.log(User);
     this.redirect('/');
   }
 ));
@@ -85,8 +86,8 @@ app.get('/auth/twitter/callback',
 
 // User search
 app.get('/api/twitter/profile', function(req, res) {
-    var query = User.handle;
-    twitter.userSearch(query, function(results, error) {
+    var userId = User.id;
+    twitter.userSearch(userId, function(results, error) {
         if (!!error) {
             res.send(error);
         }

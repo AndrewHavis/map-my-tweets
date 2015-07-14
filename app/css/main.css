@@ -83,8 +83,6 @@ img.img-btn-twitter-sign-in {
     height: 700px; 
 }
 
-p.tweet {
-    margin-top: 1.5em;
-    margin-right: 0.2em;
+blockquote.twitter-tweet {
     color: black;
 }

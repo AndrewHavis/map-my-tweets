@@ -1,4 +1,4 @@
-var app = angular.module('app', ['uiGmapgoogle-maps']);
+var app = angular.module('app', ['uiGmapgoogle-maps', 'ngSanitize']);
 
 app.config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
@@ -8,7 +8,7 @@ app.config(function(uiGmapGoogleMapApiProvider) {
     });
 });
 
-app.controller('MainCtrl', function($scope, $http, $timeout, embedService) {
+app.controller('MainCtrl', function($scope, $http, $q, embedService) {
     
 	$scope.title = 'Map My Tweets';
 	$scope.test = 'Hello, World!';
@@ -16,7 +16,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, embedService) {
     $http.get('/api/twitter/profile/')
     .success(function(response) {
         $scope.profileJSON = response;
-        $scope.title = 'Tweet Map for ' + response[0].name; // Put together our page title
+        $scope.title = 'Tweet Map for ' + response.name; // Put together our page title
     })
     .error(function(error) {
         $scope.title = 'Map My Tweets';

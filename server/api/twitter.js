@@ -21,14 +21,16 @@ var twitter = Twitter({
          
 
 // Run a user search
-module.exports.userSearch = function(query, callback) {
-    twitter.get('users/search', {q: query}, function(err, users, res) {
+module.exports.userSearch = function(userId, callback) {
+    twitter.get('users/show', {user_id: userId}, function(err, user, res) {
+        console.log(userId);
         if (!!err) {
             return callback(null, new Error('An error occurred when doing the user search\n' + JSON.stringify(err)));
         }
         else {
-            var usersObj = JSON.parse(JSON.stringify(users));
-            return callback(usersObj);
+            var userObj = JSON.parse(JSON.stringify(user));
+            console.log(userObj);
+            return callback(userObj);
         }
     });
 }
@@ -139,7 +141,7 @@ module.exports.getLocations = function(userId, callback) {
 
 // Get the embed code for a tweet
 module.exports.getEmbedCode = function(tweetId, callback) {
-    twitter.get('statuses/oembed', {id: tweetId}, function(err, embedCode, res) {
+    twitter.get('statuses/oembed', {id: tweetId, omit_script: true}, function(err, embedCode, res) {
         if (!!err) {
             return callback(null, new Error('An error occurred when retrieving the tweet embed code\n' + JSON.stringify(err)));
         }
