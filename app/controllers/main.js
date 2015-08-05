@@ -31,14 +31,55 @@ app.controller('MainCtrl', function($scope, $http, $q, apiService) {
         $scope.userId = locations.data[0].user.id; // Get the user ID
         $scope.userName = locations.data[0].user.name; // Get the user name
         $scope.userHandle = locations.data[0].user.handle; // Get the user handle
+
+        // Initialise our Google map
+        $scope.map = {
+            center: {
+                latitude: 0,
+                longitude: 0
+            },
+            zoom: 2, // Zoom out enough so that the whole world is visible
+            markers: [],
+            markersEvents: { // Define the 'bubble' that appears when a map marker is clicked
+                click: function(marker, eventName, model, arguments) {
+                    console.log(marker);
+                    console.log(eventName);
+                    console.log(model);
+                    console.log(arguments);
+                    $scope.map.window.model = model;
+                    $scope.map.window.show = true;
+                }
+            },
+            window: {
+                marker: {},
+                show: false,
+                closeClick: function() {
+                    this.show = false;
+                },
+                options: {} // define when map is ready
+            }
+        };
+
+        // Collate the information for our map markers
+        var mark = {}; // Initialise our marker object
+
         for (loc in locations.data) {
             console.log(locations.data[loc]);
-            var embedItem = apiService.getEmbedHTML(locations.data[loc].idKey);
-            $q.all([$scope.locationJSON, embedItem]).then(function(results) {
-                console.log(results[1].data);
-                $scope.embeds[loc] = results[1].data.html;
+            apiService.getEmbedHTML(locations.data[loc].idKey).then(function(embed) {
+                // Get the tweet, and its ID, latitude and longitude
+                mark = {}; // Reset our marker object
+                mark.idKey = locations.data[loc].idKey;
+                mark.latitude = locations.data[loc].geometry.coordinates[1];
+                mark.longitude = locations.data[loc].geometry.coordinates[0];
+                mark.tweet = locations.data[loc].tweet;
+                mark.embedHTML = embed.data.html;
+                console.log(mark);
+                $scope.embeds.push(mark);
             });
         }
+
+        // Populate the map with our geotagged tweets
+        $scope.map.markers = $scope.embeds;
     });
 });
 

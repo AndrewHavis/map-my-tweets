@@ -68,7 +68,6 @@ passport.use(new TwitterStrategy({
         name: profile.displayName,
         handle: profile.username
     };
-    console.log(User);
     this.redirect('/');
   }
 ));

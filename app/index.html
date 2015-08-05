@@ -59,7 +59,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-md-12 row ng-cloak" data-ng-if="locations !== undefined && profileJSON.id !== undefined">
+            <div class="col-md-12 row ng-cloak" data-ng-if="locations !== undefined && userId !== undefined">
                 <ui-gmap-google-map center='map.center' zoom='map.zoom'>
                     <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" idKey="'idKey'" events="map.markersEvents">
                         <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeclick="map.window.closeClick()" ng-bind-html="map.window.model.embedHTML"></ui-gmap-window>

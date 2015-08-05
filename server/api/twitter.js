@@ -47,6 +47,18 @@ module.exports.getUserId = function(query, callback) {
     });
 }
 
+module.exports.getTweet = function(tweetId, callback) {
+    twitter.get('statuses/show', {id: tweetId}, function(err, tweet, res) {
+        if (!!err) {
+            return callback(null, new Error('An error occurred when getting the tweet\n' + JSON.stringify(err)));
+        }
+        else {
+            var tweetObj = JSON.parse(JSON.stringify(tweet));
+            return callback(tweetObj);
+        }
+    });
+}
+
 // Get a user's tweets
 module.exports.getTweets = function(userId, callback) {
     twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1}, function(err, tweets, res) {
@@ -152,4 +164,3 @@ module.exports.getEmbedCode = function(tweetId, callback) {
     })
 }
 
-    
