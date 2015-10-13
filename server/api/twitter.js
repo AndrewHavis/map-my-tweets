@@ -114,8 +114,8 @@ module.exports.isUserInList = function(userId, listId, callback) {
 }
 
 // Get a user's tweets
-module.exports.getTweets = function(userId, callback) {
-    twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1}, function(err, tweets, res) {
+module.exports.getTweets = function(userId, page, callback) {
+    twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1, page: page}, function(err, tweets, res) {
         if (!!err) {
             return callback(null, new Error('An error occurred when retrieving tweets\n' + JSON.stringify(err)));
         }

@@ -98,9 +98,25 @@ app.get('/api/twitter/profile', function(req, res) {
 
 
 // Get tweets
+
+// Unpaged (200 tweet maximum)
 app.get('/api/twitter/tweets', function(req, res) {
     var userId = User.id;
-    twitter.getTweets(userId, function(result, error) {
+    twitter.getTweets(userId, 1, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.send(result);
+        }
+    });
+});
+
+// Paged (3,200 tweet maximum, with 200 tweets per page, giving a maximum of 16 pages)
+app.get('/api/twitter/tweets/:page', function(req, res) {
+    var userId = User.id;
+    var page = req.params.page;
+    twitter.getTweets(userId, page, function(result, error) {
         if (!!error) {
             res.send(error);
         }
