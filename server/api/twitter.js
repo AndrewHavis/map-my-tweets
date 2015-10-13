@@ -140,8 +140,8 @@ module.exports.getTweet = function(tweetId, callback) {
 }
 
 // Get tweet location
-module.exports.getLocations = function(userId, callback) {
-    twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1}, function(err, tweets, res) {
+module.exports.getLocations = function(userId, page, callback) {
+    twitter.get('statuses/user_timeline', {user_id: userId, count: 200, include_rts: 1, page: page}, function(err, tweets, res) {
         if (!!err) {
             return callback(null, new Error('An error occurred when getting tweet locations\n' + JSON.stringify(err)));
         }

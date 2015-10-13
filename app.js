@@ -130,7 +130,20 @@ app.get('/api/twitter/tweets/:page', function(req, res) {
 // Get the location (latitude and longitude in GeoJSON format) of a tweet
 app.get('/api/twitter/locations', function(req, res) {
     var userId = User.id;
-    twitter.getLocations(userId, function(result, error) {
+    twitter.getLocations(userId, 1, function(result, error) {
+        if (!!error) {
+            res.send(error);
+        }
+        else {
+            res.send(result);
+        }
+    });
+});
+
+app.get('/api/twitter/locations/:page', function(req, res) {
+    var userId = User.id;
+    var page = req.params.page;
+    twitter.getLocations(userId, page, function(result, error) {
         if (!!error) {
             res.send(error);
         }
