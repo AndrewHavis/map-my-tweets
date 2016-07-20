@@ -28,7 +28,10 @@
   "dependencies": {
     "bootstrap": "~3.3.4",
     "angular": "~1.4.0",
-    "angular-google-maps": "~2.1.5",
+    "angular-google-maps": "2.3.2",
     "lodash": "^4.13.1"
+  },
+  "resolutions": {
+    "angular-google-maps": "2.3.2"
   }
 }
