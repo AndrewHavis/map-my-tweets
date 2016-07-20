@@ -22,7 +22,7 @@ Once the Twitter credentials have been supplied, this application can be run by 
 
     node app
     
-When the app is running, go to http://localhost:6002 and sign in to Twitter by clicking the button shown. You should then be shown your geotagged tweets (from the most recent 200) on a Google Map.
+When the app is running, go to [`http://localhost:6002`](http://localhost:6002) and sign in to Twitter by clicking the button shown. You should then be shown your geotagged tweets (from the most recent 200) on a Google Map.
 
 Privacy
 -------
