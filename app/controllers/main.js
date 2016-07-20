@@ -16,7 +16,9 @@ app.controller('MainCtrl', function($scope, $http) {
     $http.get('/api/twitter/profile/')
     .success(function(response) {
         $scope.profileJSON = response;
-        $scope.title = 'Tweet Map for ' + response[0].name; // Put together our page title
+        if (typeof response[0] !== 'undefined') {
+            $scope.title = 'Tweet Map for ' + response[0].name; // Put together our page title
+        }
     })
     .error(function(error) {
         $scope.title = 'Map My Tweets';
