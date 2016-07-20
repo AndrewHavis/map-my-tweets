@@ -20,7 +20,5 @@
     "node": "0.10.26"
   },
   "repository": {},
-  "devDependencies": {
-    "lodash": "^4.13.1"
-  }
+  "devDependencies": {}
 }
