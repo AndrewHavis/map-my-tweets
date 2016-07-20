@@ -2,8 +2,8 @@ var app = angular.module('app', ['uiGmapgoogle-maps']);
 
 app.config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
-        //    key: 'your api key',
-        v: '3.17',
+        key: 'AIzaSyBBrhi0VkuS2oxdIhGXAOQceFj4AEvylY8', // Browser API key (can be safely made public)
+        v: '3',
         libraries: 'weather,geometry,visualization'
     });
 });
