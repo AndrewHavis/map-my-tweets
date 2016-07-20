@@ -24,6 +24,11 @@ Once the Twitter credentials have been supplied, this application can be run by 
     
 When the app is running, go to [`http://localhost:6002`](http://localhost:6002) and sign in to Twitter by clicking the button shown. You should then be shown your geotagged tweets (from the most recent 200) on a Google Map.
 
+Demonstration
+-------------
+
+A live demonstration of this app can be found at [http://map-my-tweets.andrew-havis.co.uk/](http://map-my-tweets.andrew-havis.co.uk/).
+
 Privacy
 -------
 
