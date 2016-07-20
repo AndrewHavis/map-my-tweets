@@ -54,7 +54,7 @@
             </div>
             <div class="col-md-12 row ng-cloak" data-ng-show="locations !== undefined && profileJSON[0].id !== undefined">
                 <ui-gmap-google-map center="map.center" zoom="map.zoom">
-                    <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" idKey="'idKey'" events="map.markersEvents">
+                    <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'" idkey="'idKey'" events="map.markersEvents">
                         <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeclick="map.window.closeClick()" ng-cloak>
                             <p class="tweet">{{map.window.model.tweet}}</p>
                         </ui-gmap-window>
